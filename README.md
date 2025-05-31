@@ -2,6 +2,9 @@
 
 ![Design of the countdown-timer](./finalOutput/timer.png)
 
+### 🔗 Live Demo
+[Click here to view the live demo](https://launch-countdown-timer-nishmika.netlify.app/)
+
 A responsive countdown timer built as part of a Frontend Mentor challenge. This timer features a dynamic countdown from 14 days with flip-card animation effects for number transitions. Designed with Tailwind CSS and built using vanilla JavaScript.
 
 ## 🚀 Overview
