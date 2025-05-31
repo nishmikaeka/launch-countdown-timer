@@ -1,31 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+<html>
+  <head>
+    <link rel="stylesheet" href="./styles/output.css" />
+  </head>
+  <body
+    class="bg-gradient-to-b from-[#0f0d1f] via-[#1f1d2a] to-[#241e2c] min-h-screen w-full overflow-hidden relative"
+  >
+    <!-- Stars Layer -->
+    <div class="absolute inset-0 z-10">
+      <img
+        class="w-full h-full object-cover"
+        src="./images/bg-stars.svg"
+        alt="Stars background"
+      />
+    </div>
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  
-  <title>Frontend Mentor | Launch countdown timer</title>
+    <!-- Mountains Layer -->
+    <div
+      class="absolute bottom-0 w-[150%] z-20 -left-10 sm:bottom-5 sm:scale-y-150"
+    >
+      <img
+        src="./images/pattern-hills.svg"
+        class="w-full h-28 scale-x-150 scale-y-120"
+        alt="Mountain background"
+      />
+    </div>
+    <div
+      class="text-gray-200 absolute top-24 sm:top-32 sm:text-lg left-1/2 -translate-x-1/2 font-bold hidden sm:block tracking-tight text-center text-base w-full"
+    >
+      <h1>W E ' R E&nbsp &nbspL A U N C H I N G &nbsp S O O N</h1>
+    </div>
+    <div
+      class="text-gray-200 absolute top-32 left-1/2 sm:hidden -translate-x-1/2 font-bold tracking-tight text-center text-base w-full"
+    >
+      <h1>W E ' R E&nbsp &nbspL A U N C H I N G</h1>
+      <h1>S O O N</h1>
+    </div>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
-</head>
-<body>
+    <!--designing of one box with logic-->
+    <!-- Seconds box-->
+    <div
+      id="time-cards"
+      class="flex justify-center gap-3 w-[250px] h-[500px] absolute top-[70%] sm:top-[66.66%] left-1/2 -translate-x-1/2 -translate-y-1/2"
+    ></div>
+    <div
+      class="flex gap-5 sm:gap-8 justify-center z-50 left-1/2 -translate-x-1/2 absolute bottom-10"
+    >
+      <div>
+        <img
+          src="./images/icon-facebook.svg"
+          class="w-5 h-5 filter hover:brightness-200 hover:drop-shadow-[0_0_5px_#f85c83] transition duration-300"
+        />
+      </div>
+      <div>
+        <img
+          src="./images/icon-pinterest.svg"
+          class="w-5 h-5 filter hover:brightness-200 hover:drop-shadow-[0_0_5px_#f85c83] transition duration-300"
+        />
+      </div>
+      <div>
+        <img
+          src="./images/icon-instagram.svg"
+          class="w-5 h-5 filter hover:brightness-200 hover:drop-shadow-[0_0_5px_#f85c83] transition duration-300"
+        />
+      </div>
+    </div>
+  </body>
 
-  We're launching soon
+  <script>
+    /*Idendtify each box sepereately */
 
-  Days
-  Hours
-  Minutes
-  Seconds
-  
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
-</body>
+    const units = ["days", "hours", "minutes", "seconds"];
+    const container = document.getElementById("time-cards");
+
+    //generate flip cards
+
+    units.forEach((unit) => {
+      const card = document.createElement("div");
+      card.className = "flipcard flex flex-col items-center h-auto gap-1";
+      card.setAttribute("data-unit", unit);
+      card.innerHTML = `
+        <div class="relative w-[50px] h-[100px] sm:w-[100px] sm:h-[190px] ">
+          <div class="absolute items-center top-3/4 -translate-y-1/2 -left-1.5 w-2 sm:w-[9px] sm:h-[9px] h-2 bg-[#1e1c2a] rounded-full z-10"></div>
+          <div class="top-half z-0  rounded-md  bg-[#313241] absolute top-1/2 left-0 w-full h-1/2 sm:text-5xl text-3xl text-[#f85c83] bg-gray-800 flex items-center justify-center origin-bottom font-bold">00</div>
+          <div class="bottom-half absolute z-0 top-1/2  rounded-md bg-[#313241] left-0 w-full h-1/2 text-3xl sm:text-5xl text-[#f85c83] bg-gray-900 flex items-center justify-center origin-top font-bold">00</div>
+          <div class="absolute items-center top-3/4 -translate-y-1/2 -right-1.5 w-2 h-2 sm:w-[9px] sm:h-[9px] bg-[#1e1c2a] rounded-full z-10"></div>
+         </div>
+        <p class="text-[6px] sm:text-[8px] text-[#8385A9] mt-4 tracking-[0.2em] uppercase">${unit}</p>
+      `;
+
+      container.appendChild(card);
+    });
+
+    //flip animation logic
+
+    function flipCard(unit, newNumber) {
+      const card = document.querySelector(`[data-unit="${unit}"]`);
+      const topHalf = card.querySelector(".top-half");
+      const bottomHalf = card.querySelector(".bottom-half");
+
+      if (topHalf.textContent !== newNumber) {
+        topHalf.classList.add("animate-flip-top");
+        bottomHalf.classList.add("animate-flip-bottom");
+
+        setTimeout(() => {
+          topHalf.textContent = newNumber;
+          bottomHalf.textContent = newNumber;
+          topHalf.classList.remove("animate-flip-top");
+          bottomHalf.classList.remove("animate-flip-bottom");
+        }, 1300);
+      }
+    }
+    //countdown logic
+    const targetDate = new Date("2025-05-31T23:59:59").getTime();
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        units.forEach((u) => flipCard(u, "00"));
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      flipCard("days", String(days).padStart(2, "0"));
+      flipCard("hours", String(hours).padStart(2, "0"));
+      flipCard("minutes", String(minutes).padStart(2, "0"));
+      flipCard("seconds", String(seconds).padStart(2, "0"));
+    }, 1000);
+  </script>
 </html>
